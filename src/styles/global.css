@@ -1,0 +1,149 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ink: #0c0f14;
+  --color-ink-2: #151a21;
+  --color-paper: #f3efe8;
+  --color-paper-2: #e8e2d7;
+  --color-amber: #e8a35c;
+  --color-cedar: #9a5a34;
+  --color-mute: #6d6a64;
+  --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
+}
+
+:root { color-scheme: light; }
+html { background: var(--color-ink); }
+body {
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: var(--color-paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+/* Sem barra de rolagem: o fio de prumo (Nav.astro) mostra onde você está. */
+html { scrollbar-width: none; }
+html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
+html.menu-open { overflow: hidden; }
+
+.eyebrow {
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.accent { font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+.container-x { width: min(1200px, 100% - 2.5rem); margin-inline: auto; }
+
+/* Revela ao entrar na tela (controlado em scripts/main.ts) */
+[data-reveal] { opacity: 0; transform: translateY(24px); }
+.no-js [data-reveal], .reduced [data-reveal] { opacity: 1; transform: none; }
+
+/* Hero (scripts/sequence.ts): a obra fica presa por 4 telas e o antes/depois sobe por cima dela na última. */
+.js:not(.reduced) #obra { height: 500svh; }
+.js:not(.reduced) #comparar { margin-top: -100svh; }
+
+/* Celular: canvas e poster viram a faixa da fachada, fundida ao fundo em cima e embaixo.
+   O poster começa no mesmo ponto do canvas (11% da largura, ver MOBILE_CROP). */
+@media (orientation: portrait) {
+  .seq-canvas, .seq-poster {
+    top: 20svh;
+    bottom: auto;
+    height: 68svh;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 35%, #000 82%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 35%, #000 82%, transparent);
+  }
+  .seq-poster { object-position: calc(-0.11 * 68svh * 16 / 9) 50%; }
+}
+
+/* Manifesto e "Por dentro" ficam presos enquanto o scroll anima (manifesto.ts, interior.ts). */
+.js:not(.reduced) #manifesto { height: 260svh; }
+.js:not(.reduced) #casa { height: 300svh; }
+.reduced .in-frame, .reduced .in-words, .no-js .in-frame, .no-js .in-words { display: none; }
+
+/* Serviços (services.ts): textos no mesmo lugar; sem movimento, fica a 1ª mídia e todos os textos em lista. */
+.js:not(.reduced) #servicos { height: 400svh; }
+.js:not(.reduced) .sv-texts { display: grid; }
+.js:not(.reduced) .sv-text { grid-area: 1 / 1; }
+.reduced .sv-media:not(:first-child), .no-js .sv-media:not(:first-child) { display: none; }
+.reduced .sv-stage, .no-js .sv-stage { position: relative; height: auto; min-height: 100svh; }
+.reduced .sv-text + .sv-text, .no-js .sv-text + .sv-text { margin-top: 2.5rem; }
+
+/* Projeto (blueprint.ts). Celular em pé: foto, croqui e cotas numa faixa larga (corta as laterais igual). */
+.js:not(.reduced) #planta { height: 300svh; }
+@media (orientation: portrait) {
+  .bp-box { top: 50%; bottom: auto; height: 75vw; translate: 0 -30%; }
+  .bp text { font-size: 44px; }
+}
+
+/* Visita (visita.ts calcula a altura da seção). Sem movimento: trilho com rolagem horizontal nativa. */
+.vs-track { display: flex; align-items: center; gap: clamp(1.5rem, 5vw, 5rem); padding-inline: max(1.25rem, calc((100vw - 1200px) / 2)) 12vw; }
+.vs-card { flex: none; width: min-content; }
+.vs-card:first-child { position: relative; z-index: 10; }
+.vs-card:first-child .vs-frame { transform-origin: 50% 50%; }
+.vs-card:nth-child(even) { margin-top: 14svh; }
+.vs-card:nth-child(odd) { margin-bottom: 8svh; }
+.vs-v .vs-frame { width: min(34svh, 62vw); aspect-ratio: 3 / 4; }
+.vs-h .vs-frame { width: min(80svh, 84vw); aspect-ratio: 16 / 10; }
+.js:not(.reduced) .vs-track { position: absolute; inset: 0 auto 0 0; width: max-content; padding-top: 12svh; }
+.reduced .vs-stage, .no-js .vs-stage { position: relative; height: auto; padding-bottom: 4rem; }
+.reduced .vs-track, .no-js .vs-track { overflow-x: auto; padding-block: 3rem 1rem; scroll-snap-type: x mandatory; }
+.reduced .vs-card, .no-js .vs-card { scroll-snap-align: center; }
+.reduced .vs-count, .no-js .vs-count { display: none; }
+.mf-text { perspective: 900px; }
+.mf-w { display: inline-block; }
+
+/* Texto que rola letra a letra no hover: a cópia vem de baixo pelo text-shadow. */
+.roll { display: inline-flex; overflow: hidden; line-height: 1.15; }
+.roll > span {
+  display: inline-block;
+  text-shadow: 0 1.15em currentColor;
+  transition: transform 0.6s cubic-bezier(0.7, 0, 0.2, 1);
+  transition-delay: calc(var(--i) * 18ms);
+}
+a:hover .roll > span, a:focus-visible .roll > span { transform: translateY(-1.15em); }
+
+/* Menu */
+.menu-list:hover .menu-link:not(:hover) { opacity: 0.35; }
+.menu-link[aria-current] .menu-n { color: var(--color-amber); }
+.menu-bg[data-on] { opacity: 1; transform: scale(1); }
+.nav-toggle[aria-expanded='true'] .nav-label > span { transform: translateY(-100%); }
+.nav-toggle[aria-expanded='true'] .nav-burger > span:first-child { transform: translateY(4.5px) rotate(45deg); }
+.nav-toggle[aria-expanded='true'] .nav-burger > span:last-child { transform: translateY(-4.5px) rotate(-45deg); }
+
+/* Fio de prumo: marcas de nível por seção; no desktop, passar o mouse mostra os nomes. */
+.plumb { pointer-events: none; }
+.plumb-tick {
+  position: absolute;
+  left: 50%;
+  width: 9px;
+  height: 1px;
+  margin-left: -4.5px;
+  background: rgb(255 255 255 / 0.6);
+  mix-blend-mode: difference;
+}
+.plumb-tick::before { content: ''; position: absolute; inset: -7px -8px; }
+.plumb-tick::after {
+  content: attr(data-label);
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  transform: translate(6px, -50%);
+  white-space: nowrap;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+}
+@media (hover: hover) and (pointer: fine) {
+  .plumb-tick { pointer-events: auto; cursor: pointer; }
+  .plumb:hover .plumb-tick::after { opacity: 0.85; transform: translate(0, -50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

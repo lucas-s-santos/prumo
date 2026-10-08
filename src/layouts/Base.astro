@@ -1,0 +1,34 @@
+---
+import '../styles/global.css';
+interface Props { title?: string; description?: string }
+const {
+  title = 'PRUMO — Arquitetura & Construção',
+  description = 'Projetamos e construímos sua casa, a partir do chão. Arquitetura e obra no Sul de Minas.',
+} = Astro.props;
+---
+<!doctype html>
+<html lang="pt-BR" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0c0f14" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap"
+    />
+    <script is:inline>
+      document.documentElement.classList.replace('no-js', 'js');
+      // Antes da primeira pintura: o layout do hero muda com movimento reduzido (global.css).
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('reduced');
+    </script>
+  </head>
+  <body>
+    <slot />
+    <script>import '../scripts/main.ts';</script>
+  </body>
+</html>

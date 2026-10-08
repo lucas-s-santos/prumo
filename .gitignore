@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.astro/
+
+# Só na máquina: gravação de outro site (referência) e arquivos descartados
+assets/referencias/
+assets/descartadas/
+
+# Gerados pelo npm run frames ao emendar clipes A–D
+assets/videos/lista.txt
+assets/videos/_obra.mp4
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log

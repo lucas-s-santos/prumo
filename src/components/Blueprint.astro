@@ -1,0 +1,59 @@
+---
+import { image } from '../lib/assets';
+// O croqui (bordas da própria foto, gerado por `npm run frames`) se desenha e a casa real sobe por baixo dele.
+// Foto, croqui e cotas dividem o mesmo enquadramento: imagens em object-cover centralizado e
+// SVG com o viewBox da foto (1920×1080) em "slice" — no celular a caixa vira uma faixa (global.css).
+// Animação em scripts/blueprint.ts.
+const traco = image('projeto-traco');
+const foto = image('05-pronta');
+const cotas = [
+  'M200 887H1720', // terreno
+  'M1790 368V887M1776 887H1804M1776 618H1804M1776 368H1804', // níveis
+  'M350 262H1615M350 250V274M1615 250V274', // largura total
+];
+const eixos: [string, number][] = [['A', 318], ['B', 760], ['C', 975], ['D', 1465], ['E', 1703]];
+---
+<section id="planta" data-nav="Projeto" class="relative bg-ink text-white">
+  <div class="bp-stage sticky top-0 h-svh overflow-hidden">
+    <div class="bp-box absolute inset-0">
+      {foto && <img src={foto} alt="A Residência Serra construída" class="bp-foto absolute inset-0 h-full w-full object-cover" loading="lazy" decoding="async" />}
+      {traco && <img src={traco} alt="" class="bp-traco absolute inset-0 h-full w-full object-cover mix-blend-screen" loading="lazy" decoding="async" />}
+      <svg class="bp absolute inset-0 h-full w-full text-paper" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" fill="none" stroke="currentColor" role="img" aria-label="Fachada frontal da Residência Serra com cotas">
+        {cotas.map((d, i) => <path d={d} pathLength="1" class="bp-line" stroke-width={i === 0 ? 1.6 : 1} vector-effect="non-scaling-stroke" />)}
+        {eixos.map(([l, x]) => (
+          <g class="bp-eixo" stroke-width="1">
+            <path d={`M${x} 900V940`} stroke-dasharray="4 4" opacity=".6" vector-effect="non-scaling-stroke" />
+            <circle cx={x} cy={958} r="16" vector-effect="non-scaling-stroke" />
+            <text x={x} y={963} fill="currentColor" stroke="none" font-size="14" text-anchor="middle" font-family="var(--font-sans)">{l}</text>
+          </g>
+        ))}
+        <g class="bp-text" fill="currentColor" stroke="none" font-size="15" font-family="var(--font-sans)" letter-spacing="1">
+          <text x="982" y="244" text-anchor="middle">17,40 m</text>
+          <text x="1814" y="892">±0,00</text>
+          <text x="1814" y="623">+3,20</text>
+          <text x="1814" y="373">+6,40</text>
+        </g>
+      </svg>
+      <span class="bp-scan pointer-events-none absolute inset-y-0 left-0 w-px bg-amber shadow-[0_0_18px_2px_rgba(232,163,92,.55)]"></span>
+      <span class="bp-rise pointer-events-none absolute inset-x-0 top-full h-px bg-amber shadow-[0_0_18px_2px_rgba(232,163,92,.55)]"></span>
+    </div>
+
+    <!-- Título no céu, acima da cota de 17,40 m; o resto embaixo, abaixo dos eixos -->
+    <div class="pointer-events-none absolute inset-x-0 top-0 h-[30%] bg-linear-to-b from-ink/80 to-transparent"></div>
+    <div class="container-x relative pt-[10svh] md:pt-[9.5svh]">
+      <p class="eyebrow text-white/55">Projeto executivo</p>
+      <h2 class="mt-3 text-[clamp(1.9rem,3.1vw,2.9rem)] leading-[1.05] font-medium tracking-[-0.03em] text-balance">
+        Desenhada antes de <span class="accent whitespace-nowrap text-amber">ser construída.</span>
+      </h2>
+    </div>
+    <div class="absolute inset-x-0 bottom-6">
+      <div class="container-x flex items-end justify-between gap-6">
+        <p class="max-w-[40ch] text-sm text-white/70">Cada milímetro resolvido no papel é uma decisão a menos no canteiro.</p>
+        <div class="hidden shrink-0 border border-white/20 bg-ink/50 px-4 py-3 text-[0.7rem] leading-relaxed backdrop-blur md:block">
+          <strong class="tracking-[0.25em]">PRUMO</strong><br />
+          <span class="text-white/60">Residência Serra · Fachada frontal · Esc. 1:100 · Folha 03/12</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,90 @@
+---
+import Logo from './Logo.astro';
+import { image } from '../lib/assets';
+// Itens do menu: rótulo, âncora e a foto que aparece ao fundo no hover (scripts/nav.ts).
+const itens = [
+  ['A obra', '#obra', image('03-estrutura')],
+  ['Antes & depois', '#comparar', image('05-pronta')],
+  ['O escritório', '#manifesto', image('detalhe')],
+  ['Por dentro', '#casa', image('interior')],
+  ['Serviços', '#servicos', image('servico-projeto')],
+  ['Projeto', '#planta', image('projeto-traco')],
+  ['Visita', '#visita', image('galeria-07')],
+] as const;
+// Letra por letra, para o hover "rolar" cada uma com um pequeno atraso (global.css, .roll).
+const letters = (t: string) => [...t].map((c) => (c === ' ' ? ' ' : c));
+---
+<header class="fixed inset-x-0 top-4 z-50 flex justify-center px-4">
+  <nav
+    class="flex items-center gap-1 rounded-full border border-white/10 bg-ink/60 py-1.5 pr-1.5 pl-4 text-white backdrop-blur-xl"
+    aria-label="Principal"
+  >
+    <a href="#topo" class="mr-1" aria-label="PRUMO, início"><Logo /></a>
+    <!-- Seção atual -->
+    <span class="nav-now ml-3 hidden h-[1.2em] w-[9.5rem] overflow-hidden border-l border-white/15 pl-3 text-[0.8rem] leading-[1.2] text-white/60 md:block" aria-hidden="true">
+      <span class="nav-now-t block">A obra</span>
+    </span>
+    <button
+      type="button"
+      class="nav-toggle ml-2 flex items-center gap-2.5 rounded-full px-3 py-2 text-[0.8rem] text-white/85 transition hover:text-white"
+      aria-expanded="false"
+      aria-controls="menu"
+    >
+      <span class="nav-burger relative block h-2.5 w-4" aria-hidden="true">
+        <span class="absolute inset-x-0 top-0 h-px bg-current transition duration-500"></span>
+        <span class="absolute inset-x-0 bottom-0 h-px bg-current transition duration-500"></span>
+      </span>
+      <span class="nav-label block h-[1.2em] overflow-hidden leading-[1.2]">
+        <span class="block transition-transform duration-500">Menu</span>
+        <span class="block transition-transform duration-500">Fechar</span>
+      </span>
+    </button>
+    <a
+      href="#contato"
+      class="ml-1 hidden rounded-full bg-amber px-4 py-2 text-[0.8rem] font-medium text-ink transition hover:bg-[#f0b574] sm:inline-block"
+    >Iniciar projeto</a>
+  </nav>
+</header>
+
+<div id="menu" class="menu fixed inset-0 z-40 overflow-hidden bg-ink text-white" hidden>
+  <div class="absolute inset-0" aria-hidden="true">
+    {itens.map(([, , src], i) => src && (
+      <img src={src} alt="" data-i={i} class="menu-bg absolute inset-0 h-full w-full scale-105 object-cover opacity-0 transition duration-[900ms] ease-out" loading="lazy" decoding="async" />
+    ))}
+    <div class="absolute inset-0 bg-linear-to-r from-ink/90 via-ink/70 to-ink/35"></div>
+  </div>
+
+  <div class="container-x relative flex h-full flex-col justify-end pt-24 pb-8 md:justify-center md:pb-0">
+    <ol class="menu-list">
+      {itens.map(([t, href], i) => (
+        <li class="overflow-hidden">
+          <a href={href} data-i={i} class="menu-link flex items-baseline gap-4 py-1 transition-opacity duration-300 md:gap-7">
+            <span class="menu-n w-6 text-xs text-white/40 tabular-nums transition-colors">0{i + 1}</span>
+            <span class="roll text-[clamp(2.1rem,6.2vw,5.4rem)] font-medium tracking-[-0.035em]">
+              {letters(t).map((c, k) => <span style={`--i:${k}`}>{c}</span>)}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ol>
+
+    <div class="menu-foot mt-10 grid gap-5 border-t border-white/15 pt-6 text-sm text-white/60 md:mt-14 md:grid-cols-3 md:items-end">
+      <div>
+        <p>contato@prumo.arq.br</p>
+        <p>(35) 9 0000-0000</p>
+      </div>
+      <p>Alfenas · Sul de Minas · <span class="menu-clock text-white tabular-nums">--:--</span></p>
+      <a href="#contato" class="justify-self-start rounded-full bg-amber px-6 py-3.5 font-medium text-ink transition hover:bg-[#f0b574] md:justify-self-end">Iniciar projeto</a>
+    </div>
+  </div>
+</div>
+
+<!-- Fio de prumo: substitui a barra de rolagem. Marcas de nível em cada seção (clicáveis no desktop). -->
+<div class="plumb fixed top-1/2 right-0 z-30 h-[46svh] w-4 -translate-y-1/2 md:right-4 md:w-6" aria-hidden="true">
+  <span class="absolute inset-y-0 left-1/2 w-px bg-white/20 mix-blend-difference"></span>
+  <span class="plumb-line absolute inset-x-0 top-0 mx-auto h-full w-px origin-top scale-y-0 bg-white/80 mix-blend-difference"></span>
+  <span class="plumb-ticks absolute inset-0"></span>
+  <svg class="plumb-bob absolute top-0 left-1/2 -ml-[5px]" width="10" height="13" viewBox="0 0 12 16">
+    <path d="M1.5 0h9L6 15.5z" fill="var(--color-amber)" />
+  </svg>
+</div>

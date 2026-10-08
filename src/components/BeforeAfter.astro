@@ -1,0 +1,59 @@
+---
+import { image } from '../lib/assets';
+// Primeiro e último quadro do vídeo da obra (npm run frames): mesmo ângulo e luz do hero,
+// então a casa pronta "assenta" sobre ela mesma quando esta seção sobe por cima da obra.
+const after = image('05-pronta');
+const before = image('01-terreno');
+// Enquanto 01-terreno não existir, usa a casa pronta "apagada" como provisório.
+const beforeSrc = before ?? after;
+// Desktop: mesmo enquadramento do canvas do hero. Celular: tela cheia centrada na casa.
+const fit = 'absolute inset-0 h-full w-full object-cover object-[50%_15%] portrait:object-[53%_50%]';
+---
+<section id="comparar" data-nav="Antes & depois" class="relative z-10 h-svh overflow-hidden bg-ink text-white">
+  <div class="ba relative h-full w-full touch-pan-y select-none" style="--x:50%">
+    <img src={beforeSrc} alt="O terreno antes da obra" class:list={[fit, !before && 'grayscale brightness-[.55]']} draggable="false" loading="lazy" decoding="async" />
+    <img src={after} alt="A Residência Serra concluída, no mesmo ângulo" class={`ba-after ${fit}`} style="clip-path: inset(0 0 0 var(--x))" draggable="false" loading="lazy" decoding="async" />
+
+    <!-- Sombras só onde há texto -->
+    <div class="pointer-events-none absolute inset-x-0 top-0 h-[55%] bg-linear-to-b from-ink/75 via-ink/30 to-transparent"></div>
+    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-[32%] bg-linear-to-t from-ink/75 to-transparent"></div>
+
+    <div class="pointer-events-none absolute inset-x-0 top-[13svh] px-5 text-center">
+      <p class="eyebrow flex items-center justify-center gap-3 text-white/70">
+        <span class="hidden h-px w-6 bg-white/40 md:block"></span>Projeto em destaque · Residência Serra<span class="hidden h-px w-6 bg-white/40 md:block"></span>
+      </p>
+      <h2 class="mx-auto mt-4 max-w-[18ch] text-[clamp(2.2rem,4.6vw,3.9rem)] leading-[0.98] font-medium tracking-[-0.03em] text-balance">
+        Do chão batido <span class="accent whitespace-nowrap text-amber">à casa pronta.</span>
+      </h2>
+      <p class="mt-4 text-sm text-balance text-white/75">Arraste para comparar. Mesmo terreno, mesmo ângulo.</p>
+    </div>
+
+    <div class="pointer-events-none absolute inset-y-0 w-px -translate-x-1/2 bg-white/85" style="left: var(--x)"></div>
+    <button
+      type="button"
+      class="ba-handle absolute top-1/2 grid size-12 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize place-items-center rounded-full outline-none focus-visible:ring-2 focus-visible:ring-amber"
+      style="left: var(--x)"
+      role="slider"
+      aria-label="Comparar antes e depois"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="50"
+    >
+      <span class="grid size-8 place-items-center rounded-full bg-amber text-ink shadow-[0_6px_24px_rgba(0,0,0,.35)]">
+        <svg width="14" height="7" viewBox="0 0 22 10" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <path d="M5 1 1 5l4 4M17 1l4 4-4 4" />
+        </svg>
+      </span>
+    </button>
+
+    <div class="pointer-events-none absolute inset-x-0 bottom-6 md:bottom-8">
+      <div class="container-x flex items-end justify-between gap-6">
+        <div>
+          <p class="eyebrow">Antes / Depois</p>
+          <p class="mt-2 max-w-[34ch] text-xs text-white/65 md:text-sm">Residência Serra · 18 meses de obra · Concreto, vidro & cedro</p>
+        </div>
+        <a href="#contato" class="pointer-events-auto shrink-0 rounded-full bg-amber px-5 py-3 text-[0.8rem] font-medium text-ink transition hover:bg-[#f0b574]">Quero uma casa assim</a>
+      </div>
+    </div>
+  </div>
+</section>

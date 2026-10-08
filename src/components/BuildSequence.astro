@@ -1,0 +1,62 @@
+---
+import { frames, image, STAGE_FILES } from '../lib/assets';
+
+const desktop = frames('d');
+const mobile = frames('m');
+// Sem quadros ainda? Usa as imagens das etapas que existirem.
+const stages = STAGE_FILES.map(image).filter(Boolean) as string[];
+// Os quadros de /m já vêm recortados na faixa da fachada (scripts/frames.mjs).
+const data = JSON.stringify({ desktop, mobile: mobile.length ? mobile : desktop, stages, mobileCropped: mobile.length > 0 });
+const poster = desktop[0] ?? stages[0];
+
+const etapas = [
+  { n: '01', t: 'Estudo do terreno', d: 'Topografia, sol, vento e vista. A casa começa pelo lugar.' },
+  { n: '02', t: 'Fundação', d: 'Sondagem, locação e concreto. O que ninguém vê, e tudo sustenta.' },
+  { n: '03', t: 'Estrutura', d: 'Pilares, vigas e lajes desenham o volume da casa no céu.' },
+  { n: '04', t: 'Paredes, vidro & cedro', d: 'Vedação, esquadrias e madeira dão corpo à arquitetura.' },
+  { n: '05', t: 'Acabamento & entrega', d: 'Luz, paisagismo e os últimos detalhes. Aqui estão as chaves.' },
+];
+---
+<section id="obra" data-nav="A obra" class="relative bg-ink text-white" data-sequence={data}>
+  <div class="seq-stage sticky top-0 h-svh overflow-hidden">
+    <canvas class="seq-canvas absolute inset-0 h-full w-full" aria-hidden="true"></canvas>
+    {poster && <img src={poster} alt="" fetchpriority="high" class="seq-poster absolute inset-0 h-full w-full object-cover object-[50%_15%] transition-opacity duration-500" />}
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/0 to-ink/60"></div>
+
+    <!-- Hero (primeiro estado da sequência) -->
+    <div id="topo" class="seq-hero absolute inset-x-0 top-[12svh] px-5 text-center md:top-[9.5svh]">
+      <p class="eyebrow text-white/60">Arquitetura & construção · Sul de Minas</p>
+      <h1 class="mx-auto mt-5 max-w-[24ch] text-[clamp(2.2rem,4.6vw,3.9rem)] leading-[0.98] font-medium tracking-[-0.03em]">
+        Projetamos e construímos sua casa,<br class="hidden md:block" /> <span class="accent text-amber">a partir do chão.</span>
+      </h1>
+    </div>
+
+    <!-- Título de cada etapa -->
+    <div class="seq-labels absolute inset-x-0 top-[12svh] md:top-[10svh] px-5 text-center" aria-live="polite">
+      {etapas.map((e, i) => (
+        <div class="seq-label absolute inset-x-0 opacity-0" data-i={i}>
+          <p class="eyebrow text-amber">Etapa {e.n} de 05</p>
+          <h2 class="mt-3 text-[clamp(1.9rem,3.8vw,3rem)] leading-none font-medium tracking-[-0.025em]">{e.t}</h2>
+          <p class="mx-auto mt-3 max-w-[40ch] text-sm text-white/70 md:text-base">{e.d}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Progresso -->
+    <div class="absolute inset-x-0 bottom-6 px-5 md:bottom-8">
+      <ol class="container-x grid grid-cols-5 gap-2 md:gap-4">
+        {etapas.map((e, i) => (
+          <li class="seq-step text-white/45 transition-colors" data-i={i}>
+            <span class="block h-px overflow-hidden bg-white/20"><span class="seq-bar block h-full origin-left scale-x-0 bg-amber"></span></span>
+            <span class="mt-2 hidden text-[0.7rem] tracking-wide md:block">{e.n} · {e.t}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <p class="seq-hint eyebrow absolute bottom-20 left-1/2 -translate-x-1/2 text-white/50">Role para construir</p>
+
+    <!-- Escurece a obra enquanto o antes/depois sobe por cima -->
+    <div class="seq-dim pointer-events-none absolute inset-0 bg-ink opacity-0"></div>
+  </div>
+</section>

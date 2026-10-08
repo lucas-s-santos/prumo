@@ -1,0 +1,51 @@
+---
+import { image } from '../lib/assets';
+// Uma visita pela casa na ordem de quem chega: a vista aérea abre em tela cheia e encolhe até virar
+// o primeiro quadro; depois o scroll vertical passeia na horizontal pelos cômodos (scripts/visita.ts).
+// v = vertical (3:4), h = horizontal (16:10).
+const roteiro = [
+  ['galeria-07', 'Chegada', 'Uma clareira na mata, entre a serra e a névoa.', 'v'],
+  ['galeria-06', 'Entrada', 'Porta pivotante de cedro num muro de pedra da região.', 'v'],
+  ['servico-interiores', 'Estar', 'Pé-direito duplo voltado para a serra.', 'h'],
+  ['galeria-02', 'Escada', 'Degraus de cedro em balanço.', 'v'],
+  ['servico-interiores3', 'Cozinha', 'Ilha em concreto e marcenaria de cedro.', 'h'],
+  ['galeria-03', 'Suíte', 'A primeira luz do dia chega pela serra.', 'v'],
+  ['galeria-04', 'Banho', 'Pedra, cedro e uma claraboia.', 'v'],
+  ['galeria-05', 'Terraço', 'Deck de madeira e jardim sobre a laje.', 'v'],
+  ['galeria-055', 'Jardim suspenso', 'Paisagismo nativo no teto da casa.', 'v'],
+  ['galeria-01', 'Matéria', 'Concreto de fôrma de tábua e ripas de cedro.', 'h'],
+]
+  .map(([nome, t, d, f]) => ({ src: image(nome), t, d, f }))
+  .filter((c) => c.src);
+const total = String(roteiro.length).padStart(2, '0');
+---
+{roteiro.length > 0 && (
+  <section id="visita" data-nav="Visita" class="relative bg-ink text-white">
+    <div class="vs-stage sticky top-0 h-svh overflow-hidden">
+      <div class="vs-head container-x pt-[13svh]">
+        <p class="eyebrow text-white/55">Uma visita</p>
+        <h2 class="mt-4 text-[clamp(2rem,4.2vw,3.6rem)] leading-[1.02] font-medium tracking-[-0.03em]">
+          Entre, <span class="accent text-amber">a casa é sua.</span>
+        </h2>
+      </div>
+
+      <div class="vs-track">
+        {roteiro.map((c, i) => (
+          <figure class:list={['vs-card', c.f === 'v' ? 'vs-v' : 'vs-h']}>
+            <div class="vs-frame overflow-hidden bg-ink-2">
+              <img src={c.src} alt={`${c.t}: ${c.d}`} class="vs-img h-full w-full object-cover" loading="lazy" decoding="async" />
+            </div>
+            <figcaption class="vs-cap mt-3 flex max-w-full gap-3 text-xs leading-snug md:text-[0.8rem]">
+              <span class="text-amber tabular-nums">{String(i + 1).padStart(2, '0')}</span>
+              <span><strong class="font-medium text-white">{c.t}</strong> <span class="text-white/55">{c.d}</span></span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+
+      <p class="vs-count absolute right-[max(1.25rem,calc((100%-1200px)/2))] bottom-6 text-sm text-white/60 tabular-nums md:bottom-8">
+        <span class="vs-now text-white">01</span> / {total}
+      </p>
+    </div>
+  </section>
+)}

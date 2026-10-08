@@ -1,0 +1,47 @@
+---
+import { image, video } from '../lib/assets';
+// Uma mídia em tela cheia por serviço; a do próximo sobe por cima conforme o scroll (scripts/services.ts).
+const servicos = [
+  { n: '01', t: 'Casas sob medida', d: 'Do estudo de massa ao projeto executivo, pensado para o seu terreno e o seu jeito de viver.', img: image('servico-projeto'), video: video('servico-projeto') },
+  { n: '02', t: 'Construção completa', d: 'Gestão de obra, compras e equipe própria, com cronograma e orçamento fechados.', img: image('servico-obra') },
+  { n: '03', t: 'Estrutura & engenharia', d: 'Concreto aparente, grandes vãos e balanços calculados junto com a arquitetura.', img: image('servico-estrutura') },
+  { n: '04', t: 'Interiores & paisagismo', d: 'Marcenaria, iluminação e jardim tratados como parte do mesmo projeto.', img: image('servico-interiores2') },
+];
+---
+<section id="servicos" data-nav="Serviços" class="relative bg-ink text-white">
+  <div class="sv-stage sticky top-0 h-svh overflow-hidden">
+    {servicos.map((s, i) => (
+      <div class="sv-media absolute inset-0 overflow-hidden" data-i={i}>
+        {s.video ? (
+          <video class="sv-img h-full w-full object-cover" src={s.video} poster={s.img} muted loop playsinline preload="none" aria-hidden="true"></video>
+        ) : (
+          s.img && <img class:list={['sv-img h-full w-full object-cover', i === 1 && 'brightness-[.82] saturate-[.9]']} src={s.img} alt="" loading="lazy" decoding="async" />
+        )}
+      </div>
+    ))}
+    <div class="pointer-events-none absolute inset-0 bg-linear-to-r from-ink/85 via-ink/45 to-ink/5"></div>
+    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-ink/80 to-transparent"></div>
+
+    <div class="container-x relative flex h-full flex-col justify-end pb-[11svh] md:justify-center md:pb-0">
+      <p class="eyebrow text-white/60">Serviços</p>
+      <div class="sv-texts mt-5">
+        {servicos.map((s) => (
+          <div class="sv-text">
+            <p class="text-sm text-amber tabular-nums">{s.n} <span class="text-white/40">/ 0{servicos.length}</span></p>
+            <h2 class="mt-3 max-w-[13ch] text-[clamp(2.4rem,5.4vw,5rem)] leading-[0.98] font-medium tracking-[-0.035em]">{s.t}</h2>
+            <p class="mt-5 max-w-[40ch] text-white/75">{s.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <ol class="sv-list absolute right-[max(1.25rem,calc((100%-1200px)/2))] bottom-[11svh] hidden w-60 space-y-4 text-[0.78rem] md:block">
+      {servicos.map((s) => (
+        <li class="sv-li text-white/45 transition-colors duration-500">
+          <span class="block h-px overflow-hidden bg-white/20"><span class="sv-bar block h-full origin-left scale-x-0 bg-amber"></span></span>
+          <span class="mt-2 block">{s.n} · {s.t}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

@@ -1,0 +1,37 @@
+---
+import { image } from '../lib/assets';
+// Manifesto sobre a foto: cada palavra "levanta" e acende conforme o scroll (scripts/manifesto.ts).
+const bg = image('detalhe') ?? image('05-pronta');
+const texto = 'Na maioria das casas, quem desenha não é quem constrói. É nesse espaço que o projeto se perde.'.split(' ');
+const destaque = 'Aqui, desenho e obra são a mesma equipe.'.split(' ');
+const numeros = [
+  ['14', 'anos projetando e construindo'],
+  ['86', 'casas entregues no Sul de Minas'],
+  ['1', 'equipe do primeiro traço à chave'],
+  ['0', 'surpresas no orçamento final'],
+];
+---
+<section id="manifesto" data-nav="O escritório" class="relative bg-ink text-white">
+  <div class="mf-stage sticky top-0 h-svh overflow-hidden">
+    {bg && <img src={bg} alt="" class="mf-bg absolute inset-0 h-full w-full object-cover object-[70%_50%]" loading="lazy" decoding="async" />}
+    <div class="absolute inset-0 bg-linear-to-r from-ink/90 via-ink/75 to-ink/40"></div>
+
+    <div class="container-x relative flex h-full flex-col justify-center pt-16">
+      <p class="eyebrow text-white/50">Um escritório, uma obra</p>
+      <p class="mf-text mt-6 max-w-[24ch] text-[clamp(1.9rem,4.2vw,3.9rem)] leading-[1.06] font-medium tracking-[-0.03em]">
+        {texto.map((w) => <><span class="mf-w">{w}</span>{' '}</>)}
+        {destaque.map((w) => <><span class="mf-w accent text-amber">{w}</span>{' '}</>)}
+      </p>
+
+      <!-- Números como cotas de projeto -->
+      <dl class="mt-12 grid max-w-3xl grid-cols-2 gap-x-8 gap-y-6 md:mt-16 md:grid-cols-4">
+        {numeros.map(([n, l]) => (
+          <div class="mf-num border-l border-white/25 pl-4">
+            <dt class="text-[clamp(1.8rem,3vw,2.6rem)] leading-none font-medium tracking-[-0.04em] tabular-nums">{n}</dt>
+            <dd class="mt-2 text-xs leading-snug text-white/55">{l}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </div>
+</section>

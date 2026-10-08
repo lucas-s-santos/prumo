@@ -1,0 +1,33 @@
+---
+import { image } from '../lib/assets';
+// A sala abre a partir de uma janela até ocupar a tela, como quem entra na casa (scripts/interior.ts).
+const src = image('interior');
+---
+{src && (
+  <section id="casa" data-nav="Por dentro" class="relative bg-ink text-white">
+    <div class="in-stage sticky top-0 h-svh overflow-hidden">
+      <div class="in-words pointer-events-none absolute inset-0 flex flex-col items-center justify-between py-[15svh] text-[clamp(2.4rem,6.4vw,6.2rem)] leading-none font-medium tracking-[-0.04em] md:flex-row md:px-[5vw] md:py-0">
+        <span class="in-l">Por fora,</span>
+        <span class="in-r accent text-amber">por dentro.</span>
+      </div>
+
+      <div class="in-win absolute inset-0 overflow-hidden">
+        <img src={src} alt="Sala em pé-direito duplo, com concreto, cedro e vista para a mata" class="in-img h-full w-full object-cover" loading="lazy" decoding="async" />
+        <div class="pointer-events-none absolute inset-x-0 bottom-0 h-[35%] bg-linear-to-t from-ink/70 to-transparent"></div>
+      </div>
+
+      <!-- Caixilho da janela: some quando a sala ocupa a tela -->
+      <div class="in-frame pointer-events-none absolute inset-0 border border-white/70">
+        <span class="absolute inset-y-0 left-1/2 w-px bg-white/60"></span>
+        <span class="absolute inset-x-0 top-[38%] h-px bg-white/60"></span>
+      </div>
+
+      <div class="in-cap absolute inset-x-0 bottom-6 md:bottom-8">
+        <div class="container-x flex flex-col gap-1 text-xs text-white/70 md:flex-row md:justify-between md:text-sm">
+          <span><strong class="eyebrow mr-3 text-white">Por dentro</strong>Residência Serra · Sala em pé-direito duplo</span>
+          <span>Concreto aparente, cedro e vidro</span>
+        </div>
+      </div>
+    </div>
+  </section>
+)}
