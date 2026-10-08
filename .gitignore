@@ -6,6 +6,10 @@ dist/
 assets/referencias/
 assets/descartadas/
 
+# Originais pesados (backup no OneDrive): o site e o deploy usam só o que está em public/
+assets/originais-flow/
+assets/videos/*.mp4
+
 # Gerados pelo npm run frames ao emendar clipes A–D
 assets/videos/lista.txt
 assets/videos/_obra.mp4
