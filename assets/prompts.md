@@ -80,3 +80,11 @@ Corner of a cantilevered board-formed concrete roof slab seen from below against
 ```
 Aerial drone view at blue hour: the modern concrete, glass and cedar house glowing in a clearing of Atlantic forest, a green lawn around it, mountains in every direction. Photorealistic architectural photography, no people, no text. 16:9.
 ```
+
+## 3. Fachada de dia (seção Projeto)
+Edição de imagem (Gemini): anexe `assets/flow-entrada/fachada-noite.jpg`. Salve como `assets/originais-flow/projeto-dia.jpg`.
+Tem que manter o enquadramento exato: o croqui e as cotas do Projeto se encaixam nessa geometria.
+
+```
+Edit this photo: change the time of day to a clear, sunny midday. Bright natural daylight coming from the upper left, crisp soft shadows under the concrete slabs and the roof garden, a deep blue sky with a few light clouds, the mountains and the forest in full daylight. Turn the interior lights off; the glass now reflects the sky and the garden. Keep the house, the camera position, framing, perspective, lens and every architectural detail exactly the same. Do not move, add, remove or restyle anything. Photorealistic architectural photography, 16:9.
+```

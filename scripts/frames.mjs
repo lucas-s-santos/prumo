@@ -3,6 +3,7 @@
 import { execSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
+import { croqui } from './croqui.mjs';
 
 const vids = path.resolve('assets/videos');
 const run = (cmd) => { console.log('>', cmd); execSync(cmd, { stdio: 'inherit' }); };
@@ -43,9 +44,5 @@ for (const [name, t] of stills) {
   run(`ffmpeg -y -v error ${input} -frames:v 1 -update 1 -vf "scale=1920:-2" -c:v libwebp -quality 80 "${out}"`);
 }
 
-// Croqui da casa pronta (seção Projeto): bordas da própria foto, então o traço casa perfeitamente com ela.
-// Só a área da casa fica (máscara com borda suave); linhas cor de papel sobre o fundo ink.
-const pronta = path.resolve('public/imagens/05-pronta.webp');
-const mask = "geq=lum='lum(X,Y)*clip(min(X-250,1760-X)/70,0,1)*clip(min(Y-240,910-Y)/70,0,1)'";
-const tint = "lutrgb=r='12+val*231/255':g='15+val*224/255':b='20+val*212/255'";
-run(`ffmpeg -y -v error -i "${pronta}" -frames:v 1 -update 1 -vf "format=gray,gblur=sigma=1.4,edgedetect=low=0.07:high=0.18:mode=wires,${mask},format=rgb24,${tint}" -c:v libwebp -quality 82 "${path.resolve('public/imagens/projeto-traco.webp')}"`);
+// Croqui da seção Projeto (scripts/croqui.mjs): da fachada de dia, se existir, senão da casa pronta.
+croqui();

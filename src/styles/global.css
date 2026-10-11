@@ -132,6 +132,7 @@ html.menu-open, html.intro-on, html.lb-open { overflow: hidden; }
 @media (orientation: portrait) {
   .bp-box { top: 50%; bottom: auto; height: 75vw; translate: 0 -30%; }
   .bp text { font-size: 44px; }
+  .bp-eixo text { display: none; } /* letras maiores que os círculos no celular; ficam só as marcas */
 }
 
 /* Visita (visita.ts calcula a altura da seção). Sem movimento: trilho com rolagem horizontal nativa. */

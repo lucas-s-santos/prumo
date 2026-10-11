@@ -4,12 +4,13 @@ Landing page de arquiteto, foco em visual impecável e scroll. Marca fictícia d
 
 ## Estrutura
 - `src/pages/index.astro` — monta as seções em ordem
-- `src/components/` — Intro (abertura: o prumo cai e a tela abre a partir do fio), Nav (pílula + menu em cortina + fio de prumo), Logo/Bob (pêndulo do logo em SVG), BuildSequence (hero + obra no scroll), BeforeAfter (tela cheia, sobe por cima da obra), Manifesto (texto 3D palavra a palavra sobre foto), Interior (sala abre de uma janela), Services (uma mídia por serviço, a próxima sobe por cima), Blueprint (Projeto: croqui gerado da foto vira a casa), Visita (galeria: aérea em tela cheia vira o 1º quadro de um trilho horizontal), Contact (casa à noite + formulário que abre o WhatsApp), Footer (o prumo pousa na linha do chão + PRUMO gigante)
+- `src/components/` — Intro (abertura: o prumo cai e a tela abre a partir do fio), Nav (pílula + menu em cortina + fio de prumo), Logo/Bob (pêndulo do logo em SVG), BuildSequence (hero + obra no scroll), BeforeAfter (tela cheia, sobe por cima da obra), Manifesto (texto 3D palavra a palavra sobre foto), Interior (sala abre de uma janela), Services (uma mídia por serviço, a próxima sobe por cima), Blueprint (Projeto: croqui gerado da foto vira a casa de dia), Visita (galeria: aérea em tela cheia vira o 1º quadro de um trilho horizontal), Contact (casa à noite + formulário que abre o WhatsApp), Footer (o prumo pousa na linha do chão + PRUMO gigante)
 - `src/pages/404.astro` — "Esta página saiu do prumo"
 - `src/lib/contato.ts` — WhatsApp, telefone, e-mail e Instagram (único lugar com os contatos)
 - `src/scripts/` — `main.ts` (Lenis + GSAP, passa o Lenis ao menu), `intro.ts`, `nav.ts`, `footer.ts`, `cursor.ts`, `lightbox.ts` (fotos da Visita ampliadas), `sequence.ts` (canvas), `beforeAfter.ts`, `manifesto.ts`, `interior.ts`, `services.ts`, `blueprint.ts`, `visita.ts`, `contact.ts`
-- `scripts/frames.mjs` — `npm run frames`: vídeo da obra → quadros, fotos das etapas e o croqui `projeto-traco`
-- `scripts/images.mjs` — `npm run imagens`: `assets/originais-flow/{servico,contato,galeria}-*` → webp em `public/imagens` e vídeos leves em `public/videos`
+- `scripts/frames.mjs` — `npm run frames`: vídeo da obra → quadros e fotos das etapas
+- `scripts/croqui.mjs` — gera o croqui `projeto-traco` das bordas da fachada de dia (`projeto-dia`) ou, sem ela, da casa pronta; roda no fim dos dois scripts
+- `scripts/images.mjs` — `npm run imagens`: `assets/originais-flow/{servico,contato,galeria,projeto}-*` → webp em `public/imagens` e vídeos leves em `public/videos`
 - `assets/` — originais fora do deploy: `videos/obra.mp4` (fonte do hero), `originais-flow/` (fotos/vídeos gerados), `flow-entrada/` (referências para gerar), `prompts.md`. Fora do git (só na máquina, com backup no OneDrive): `originais-flow/`, `videos/*.mp4`, `referencias/` e `descartadas/` — sem eles o site roda e faz deploy, mas `npm run frames`/`imagens` não regeneram
 - Repositório: https://github.com/lucas-s-santos/prumo (público, branch `main`)
 - `src/lib/assets.ts` — detecta imagens/quadros em `public/` no build
@@ -34,7 +35,7 @@ Landing page de arquiteto, foco em visual impecável e scroll. Marca fictícia d
 - `npm run frames` gera `public/frames/d` (1600px, 8 q/s), `public/frames/m` (recorte da fachada, 1100px) e as fotos `01`–`05` em `public/imagens` (modo leve e antes/depois).
 - Vídeos originais ficam em `assets/`; em `public/videos` só os comprimidos pelo `npm run imagens` (vão para o deploy).
 - Fotos novas: gerar na mesma casa e luz (prompts em `assets/prompts.md`), salvar em `assets/originais-flow` com prefixo `servico-`, `contato-` ou `galeria-` e rodar `npm run imagens`. A ordem da Visita está em `Visita.astro`.
-- Projeto: foto, croqui e cotas alinhados pelo mesmo enquadramento (object-cover central + SVG 1920×1080 em slice). Cotas e eixos em `Blueprint.astro` estão em coordenadas da foto final.
+- Projeto: usa `projeto-dia` (edição de dia da foto final, prompt em `assets/prompts.md`); o `npm run imagens` a escala pela largura e centraliza em 1920×1080, o encaixe medido contra a foto da noite. Foto, croqui e cotas alinhados pelo mesmo enquadramento (object-cover central + SVG 1920×1080 em slice). Cotas e eixos em `Blueprint.astro` estão em coordenadas da foto final.
 
 ## Pendências
 - [x] Vídeo da obra (Flow) + `npm run frames`
@@ -45,5 +46,5 @@ Landing page de arquiteto, foco em visual impecável e scroll. Marca fictícia d
 - [x] Formulário envia pelo WhatsApp (`contact.ts`) e contatos reais em `src/lib/contato.ts`
 - [x] Imagem OG, SEO, 404 e Lighthouse > 90 no celular
 - [x] Abertura, rodapé-final, menu em cortina/ripado, cursor, fotos ampliadas, grade do Projeto e grão
-- [ ] Opcional: fachada ao meio-dia (mesmo enquadramento) para o Projeto não repetir a foto da noite
+- [x] Fachada de dia no Projeto (não repete a foto da noite)
 - [ ] Deploy na Vercel

@@ -1,11 +1,12 @@
 ---
 import { image } from '../lib/assets';
-// O croqui (bordas da própria foto, gerado por `npm run frames`) se desenha e a casa real sobe por baixo dele.
+// O croqui (bordas da própria foto, scripts/croqui.mjs) se desenha e a casa real sobe por baixo dele.
+// De dia (projeto-dia, npm run imagens), para não repetir a foto da noite do hero e do antes/depois.
 // Foto, croqui e cotas dividem o mesmo enquadramento: imagens em object-cover centralizado e
 // SVG com o viewBox da foto (1920×1080) em "slice" — no celular a caixa vira uma faixa (global.css).
 // Animação em scripts/blueprint.ts.
 const traco = image('projeto-traco');
-const foto = image('05-pronta');
+const foto = image('projeto-dia') ?? image('05-pronta');
 const cotas = [
   'M200 887H1720', // terreno
   'M1790 368V887M1776 887H1804M1776 618H1804M1776 368H1804', // níveis
@@ -18,7 +19,7 @@ const eixos: [string, number][] = [['A', 318], ['B', 760], ['C', 975], ['D', 146
     <!-- Papel milimetrado: se desenha de cima para baixo enquanto a seção entra (antes, a tela ficava vazia) -->
     <div class="bp-grid pointer-events-none absolute inset-0" aria-hidden="true"></div>
     <div class="bp-box absolute inset-0">
-      {foto && <img src={foto} alt="A Residência Serra construída" class="bp-foto absolute inset-0 h-full w-full object-cover" loading="lazy" decoding="async" />}
+      {foto && <img src={foto} alt="A Residência Serra construída, num dia de sol" class="bp-foto absolute inset-0 h-full w-full object-cover" loading="lazy" decoding="async" />}
       {traco && <img src={traco} alt="" class="bp-traco absolute inset-0 h-full w-full object-cover mix-blend-screen" loading="lazy" decoding="async" />}
       <svg class="bp absolute inset-0 h-full w-full text-paper" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" fill="none" stroke="currentColor" role="img" aria-label="Fachada frontal da Residência Serra com cotas">
         {cotas.map((d, i) => <path d={d} pathLength="1" class="bp-line" stroke-width={i === 0 ? 1.6 : 1} vector-effect="non-scaling-stroke" />)}
