@@ -1,5 +1,7 @@
 ---
 import { image } from '../lib/assets';
+import { CONTATO, waLink, igLink, mailLink } from '../lib/contato';
+// O briefing segue pelo WhatsApp com a mensagem pronta (scripts/contact.ts).
 // A casa à noite ao fundo (assenta com o scroll em scripts/contact.ts); texto e formulário no céu escuro à esquerda.
 const bg = image('contato-noite') ?? image('05-pronta');
 const tipos = ['Casa nova', 'Reforma', 'Interiores'];
@@ -47,14 +49,15 @@ const tipos = ['Casa nova', 'Reforma', 'Interiores'];
         </label>
         <div class="mt-2 flex flex-wrap items-center justify-between gap-4">
           <p class="contact-msg text-sm text-white/60" aria-live="polite"></p>
-          <button class="rounded-full bg-amber px-6 py-3.5 text-sm font-medium text-ink transition hover:bg-[#f0b574]">Enviar briefing</button>
+          <button class="rounded-full bg-amber px-6 py-3.5 text-sm font-medium text-ink transition hover:bg-[#f0b574]">Enviar pelo WhatsApp</button>
         </div>
       </form>
 
       <div class="mt-8 flex flex-wrap gap-x-6 gap-y-1 text-sm text-white/60" data-reveal>
-        <p>contato@prumo.arq.br</p>
-        <p>(35) 9 0000-0000</p>
-        <p>Alfenas · Sul de Minas</p>
+        <a href={waLink()} target="_blank" rel="noopener" class="transition hover:text-white">WhatsApp {CONTATO.telefone}</a>
+        <a href={mailLink} class="break-all transition hover:text-white">{CONTATO.email}</a>
+        <a href={igLink} target="_blank" rel="noopener" class="transition hover:text-white">@{CONTATO.instagram}</a>
+        <p>{CONTATO.cidade}</p>
       </div>
     </div>
   </div>

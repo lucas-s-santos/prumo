@@ -1,10 +1,62 @@
 ---
-import Logo from './Logo.astro';
+import Bob from './Bob.astro';
+import { CONTATO, waLink, igLink, mailLink } from '../lib/contato';
+// Final da página (scripts/footer.ts): o prumo cai e pousa na linha do chão, que se desenha a partir
+// do ponto de pouso; PRUMO gigante sobe. "Voltar ao terreno" rola até o topo passando pela obra ao contrário.
+const links = [
+  ['A obra', '#obra'],
+  ['Antes & depois', '#comparar'],
+  ['Por dentro', '#casa'],
+  ['Serviços', '#servicos'],
+  ['Projeto', '#planta'],
+  ['Visita', '#visita'],
+];
 ---
-<footer class="bg-ink py-12 text-white/60">
-  <div class="container-x flex flex-col gap-6 text-sm md:flex-row md:items-center md:justify-between">
-    <Logo class="text-white" />
-    <p>Do terreno à chave. · Alfenas, MG</p>
-    <p class="text-white/35">© {new Date().getFullYear()} PRUMO · Projeto fictício de portfólio</p>
+<footer class="ft relative overflow-hidden bg-ink text-white">
+  <div class="ft-fall relative h-[34svh]" aria-hidden="true">
+    <div class="ft-pend absolute top-0 left-1/2 flex -translate-x-1/2 flex-col items-center">
+      <span class="ft-fio block w-px origin-top bg-paper/50"></span>
+      <Bob size={26} />
+    </div>
+  </div>
+  <div class="ft-ground h-px origin-center bg-paper/30" aria-hidden="true"></div>
+
+  <div class="container-x grid gap-12 pt-14 pb-10 md:grid-cols-12">
+    <div class="ft-in md:col-span-5">
+      <p class="eyebrow text-white/50">No prumo, do primeiro traço à chave</p>
+      <p class="mt-4 max-w-[18ch] text-[clamp(1.8rem,3vw,2.6rem)] leading-[1.05] font-medium tracking-[-0.03em]">
+        Vamos tirar a sua casa <span class="accent text-amber">do papel?</span>
+      </p>
+      <a href={waLink('Olá! Vim pelo site da PRUMO e quero conversar sobre uma casa.')} target="_blank" rel="noopener" class="mt-7 inline-flex items-center gap-3 rounded-full bg-amber px-6 py-3.5 text-sm font-medium text-ink transition hover:bg-[#f0b574]">
+        Conversar no WhatsApp <span aria-hidden="true">→</span>
+      </a>
+    </div>
+    <nav class="ft-in text-sm md:col-span-3 md:col-start-7" aria-label="Rodapé">
+      <p class="eyebrow mb-4 text-white/55">Página</p>
+      <ul class="space-y-2 text-white/70">
+        {links.map(([t, href]) => <li><a href={href} class="transition hover:text-white">{t}</a></li>)}
+      </ul>
+    </nav>
+    <div class="ft-in text-sm md:col-span-3">
+      <p class="eyebrow mb-4 text-white/55">Contato</p>
+      <ul class="space-y-2 text-white/70">
+        <li><a href={waLink()} target="_blank" rel="noopener" class="transition hover:text-white">WhatsApp {CONTATO.telefone}</a></li>
+        <li><a href={mailLink} class="break-all transition hover:text-white">{CONTATO.email}</a></li>
+        <li><a href={igLink} target="_blank" rel="noopener" class="transition hover:text-white">@{CONTATO.instagram}</a></li>
+        <li class="text-white/55">{CONTATO.cidade}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container-x" aria-hidden="true">
+    <svg class="ft-word w-full overflow-visible" viewBox="0 0 1000 178">
+      <text x="500" y="166" text-anchor="middle" font-size="200" font-weight="500" textLength="996" lengthAdjust="spacing" fill="currentColor" font-family="var(--font-sans)">PRUMO</text>
+    </svg>
+  </div>
+
+  <div class="container-x flex flex-col gap-3 border-t border-white/10 py-6 text-xs text-white/55 md:flex-row md:items-center md:justify-between">
+    <p>© {new Date().getFullYear()} PRUMO · Projeto fictício de portfólio</p>
+    <p>Site por <a href={igLink} target="_blank" rel="noopener" class="text-white/70 transition hover:text-amber">CalmDev · @{CONTATO.instagram}</a></p>
+    <button type="button" class="ft-top self-start text-white/70 transition hover:text-amber md:self-auto">Voltar ao terreno ↑</button>
   </div>
 </footer>

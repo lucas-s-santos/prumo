@@ -1,0 +1,15 @@
+---
+import Bob from './Bob.astro';
+// Abertura (scripts/intro.ts): o prumo cai, balança e assenta; PRUMO se escreve; a tela se abre a partir do fio.
+// Só na primeira visita da sessão (Base.astro marca .intro-seen) e nunca com movimento reduzido.
+---
+<div class="intro fixed inset-0 z-[70] bg-ink text-white" aria-hidden="true">
+  <div class="intro-pend absolute top-0 left-1/2 flex -translate-x-1/2 flex-col items-center">
+    <span class="block h-[40svh] w-px bg-paper/60"></span>
+    <Bob size={30} />
+  </div>
+  <p class="intro-word absolute left-1/2 top-[calc(40svh+66px)] flex -translate-x-1/2 gap-[0.55em] pl-[0.55em] text-[1.05rem] font-normal">
+    {[...'PRUMO'].map((c) => <span class="inline-block">{c}</span>)}
+  </p>
+  <p class="intro-sub absolute left-1/2 top-[calc(40svh+108px)] -translate-x-1/2 text-[0.65rem] tracking-[0.3em] whitespace-nowrap text-white/45 uppercase">Arquitetura & construção</p>
+</div>

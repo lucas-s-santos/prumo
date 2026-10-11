@@ -10,7 +10,7 @@ const beforeSrc = before ?? after;
 const fit = 'absolute inset-0 h-full w-full object-cover object-[50%_15%] portrait:object-[53%_50%]';
 ---
 <section id="comparar" data-nav="Antes & depois" class="relative z-10 h-svh overflow-hidden bg-ink text-white">
-  <div class="ba relative h-full w-full touch-pan-y select-none" style="--x:50%">
+  <div class="ba relative h-full w-full touch-pan-y select-none" style="--x:50%" data-cursor="Arraste">
     <img src={beforeSrc} alt="O terreno antes da obra" class:list={[fit, !before && 'grayscale brightness-[.55]']} draggable="false" loading="lazy" decoding="async" />
     <img src={after} alt="A Residência Serra concluída, no mesmo ângulo" class={`ba-after ${fit}`} style="clip-path: inset(0 0 0 var(--x))" draggable="false" loading="lazy" decoding="async" />
 

@@ -1,11 +1,12 @@
 ---
+import Bob from './Bob.astro';
 interface Props { class?: string }
 const { class: cls = '' } = Astro.props;
 ---
 <span class={`inline-flex items-center gap-2 ${cls}`}>
-  <svg width="12" height="18" viewBox="0 0 12 18" aria-hidden="true">
-    <path d="M6 0v7" stroke="currentColor" stroke-width="1" />
-    <path d="M1.5 7h9L6 17.5z" fill="var(--color-amber)" />
-  </svg>
+  <span class="flex flex-col items-center" aria-hidden="true">
+    <span class="block h-[7px] w-px bg-current opacity-80"></span>
+    <Bob size={11} />
+  </span>
   <span class="text-[0.8rem] font-normal tracking-[0.42em]">PRUMO</span>
 </span>

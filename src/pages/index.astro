@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Intro from '../components/Intro.astro';
 import Nav from '../components/Nav.astro';
 import BuildSequence from '../components/BuildSequence.astro';
 import BeforeAfter from '../components/BeforeAfter.astro';
@@ -12,8 +13,9 @@ import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 ---
 <Base>
+  <Intro />
   <Nav />
-  <main>
+  <main id="conteudo">
     <BuildSequence />
     <BeforeAfter />
     <Manifesto />

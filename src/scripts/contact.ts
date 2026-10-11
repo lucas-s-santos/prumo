@@ -1,4 +1,5 @@
 import { gsap } from 'gsap';
+import { CONTATO, waLink } from '../lib/contato';
 
 export function initContact(reduced: boolean) {
   // A casa à noite assenta devagar enquanto a seção entra.
@@ -19,8 +20,18 @@ export function initContact(reduced: boolean) {
       (form.querySelector(nome ? '#f-contato' : '#f-nome') as HTMLInputElement).focus();
       return;
     }
-    // TODO: enviar para um endpoint (Formspree, Resend, WhatsApp...)
-    msg.textContent = `Recebido, ${nome.split(' ')[0]}. Retornamos em breve.`;
+    // O briefing segue pelo WhatsApp, já escrito a partir dos campos.
+    const cidade = String(fd.get('cidade') ?? '').trim();
+    const mensagem = String(fd.get('mensagem') ?? '').trim();
+    const texto = [
+      `Olá! Sou ${nome} e vim pelo site da PRUMO.`,
+      `Projeto: ${fd.get('tipo')}`,
+      cidade && `Cidade do terreno: ${cidade}`,
+      mensagem && `Sobre a casa: ${mensagem}`,
+      `Meu contato: ${contato}`,
+    ].filter(Boolean).join('\n');
+    window.open(waLink(texto), '_blank', 'noopener');
+    msg.textContent = `Abrindo o WhatsApp, ${nome.split(' ')[0]}. Se não abrir, chame no ${CONTATO.telefone}.`;
     form.reset();
   });
 }

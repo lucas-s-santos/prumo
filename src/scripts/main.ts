@@ -10,6 +10,10 @@ import { initBlueprint } from './blueprint';
 import { initVisita } from './visita';
 import { initContact } from './contact';
 import { initNav } from './nav';
+import { initIntro } from './intro';
+import { initFooter } from './footer';
+import { initLightbox } from './lightbox';
+import { initCursor } from './cursor';
 
 gsap.registerPlugin(ScrollTrigger);
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -38,6 +42,7 @@ if (!reduced) {
   });
 }
 
+initIntro(lenis, reduced);
 initSequence(reduced);
 initBeforeAfter(reduced);
 initManifesto(reduced);
@@ -47,3 +52,6 @@ initBlueprint(reduced);
 initVisita(reduced);
 initContact(reduced);
 initNav(lenis, reduced);
+initFooter(lenis, reduced);
+initLightbox(lenis, reduced);
+initCursor(reduced);

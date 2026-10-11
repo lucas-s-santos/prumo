@@ -15,6 +15,8 @@ const eixos: [string, number][] = [['A', 318], ['B', 760], ['C', 975], ['D', 146
 ---
 <section id="planta" data-nav="Projeto" class="relative bg-ink text-white">
   <div class="bp-stage sticky top-0 h-svh overflow-hidden">
+    <!-- Papel milimetrado: se desenha de cima para baixo enquanto a seção entra (antes, a tela ficava vazia) -->
+    <div class="bp-grid pointer-events-none absolute inset-0" aria-hidden="true"></div>
     <div class="bp-box absolute inset-0">
       {foto && <img src={foto} alt="A Residência Serra construída" class="bp-foto absolute inset-0 h-full w-full object-cover" loading="lazy" decoding="async" />}
       {traco && <img src={traco} alt="" class="bp-traco absolute inset-0 h-full w-full object-cover mix-blend-screen" loading="lazy" decoding="async" />}

@@ -32,9 +32,9 @@ const total = String(roteiro.length).padStart(2, '0');
       <div class="vs-track">
         {roteiro.map((c, i) => (
           <figure class:list={['vs-card', c.f === 'v' ? 'vs-v' : 'vs-h']}>
-            <div class="vs-frame overflow-hidden bg-ink-2">
+            <button type="button" class="vs-frame block overflow-hidden bg-ink-2 outline-none focus-visible:ring-2 focus-visible:ring-amber" data-cursor="Ampliar" aria-label={`Ampliar foto: ${c.t}`}>
               <img src={c.src} alt={`${c.t}: ${c.d}`} class="vs-img h-full w-full object-cover" loading="lazy" decoding="async" />
-            </div>
+            </button>
             <figcaption class="vs-cap mt-3 flex max-w-full gap-3 text-xs leading-snug md:text-[0.8rem]">
               <span class="text-amber tabular-nums">{String(i + 1).padStart(2, '0')}</span>
               <span><strong class="font-medium text-white">{c.t}</strong> <span class="text-white/55">{c.d}</span></span>
@@ -46,6 +46,22 @@ const total = String(roteiro.length).padStart(2, '0');
       <p class="vs-count absolute right-[max(1.25rem,calc((100%-1200px)/2))] bottom-6 text-sm text-white/60 tabular-nums md:bottom-8">
         <span class="vs-now text-white">01</span> / {total}
       </p>
+    </div>
+
+    <!-- Foto ampliada (scripts/lightbox.ts move para o fim do body ao iniciar) -->
+    <div class="lb fixed inset-0 z-[65] bg-ink/95 text-white backdrop-blur-sm" hidden role="dialog" aria-modal="true" aria-label="Foto ampliada da visita">
+      <div class="absolute inset-0 flex items-center justify-center px-4 pt-20 pb-28 md:px-24 md:pb-24">
+        <img class="lb-img max-h-full max-w-full object-contain select-none" alt="" draggable="false" />
+      </div>
+      <div class="container-x absolute inset-x-0 bottom-0 flex items-end justify-between gap-6 py-6">
+        <p class="lb-cap flex max-w-[52ch] gap-3 text-sm leading-snug" aria-live="polite"></p>
+        <div class="flex shrink-0 gap-2">
+          <button type="button" class="lb-prev grid size-11 place-items-center rounded-full border border-white/20 transition hover:border-amber hover:text-amber" aria-label="Foto anterior">←</button>
+          <button type="button" class="lb-next grid size-11 place-items-center rounded-full border border-white/20 transition hover:border-amber hover:text-amber" aria-label="Próxima foto">→</button>
+        </div>
+      </div>
+      <button type="button" class="lb-close absolute top-5 right-5 flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-sm transition hover:border-amber hover:text-amber md:top-6 md:right-8">Fechar <span aria-hidden="true">✕</span></button>
+      <p class="lb-count absolute top-6 left-5 text-sm text-white/60 tabular-nums md:top-7 md:left-8"></p>
     </div>
   </section>
 )}

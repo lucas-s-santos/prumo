@@ -5,6 +5,9 @@ const {
   title = 'PRUMO — Arquitetura & Construção',
   description = 'Projetamos e construímos sua casa, a partir do chão. Arquitetura e obra no Sul de Minas.',
 } = Astro.props;
+// Endereço do site vem do astro.config (na Vercel, o domínio de produção) — as redes exigem URLs absolutas.
+const url = new URL(Astro.url.pathname, Astro.site);
+const og = new URL('/og.jpg', Astro.site);
 ---
 <!doctype html>
 <html lang="pt-BR" class="no-js">
@@ -14,21 +17,36 @@ const {
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0c0f14" />
+    <link rel="canonical" href={url} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap"
-    />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="PRUMO" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={og} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="A Residência Serra pronta, ao entardecer, com a marca PRUMO" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={og} />
     <script is:inline>
       document.documentElement.classList.replace('no-js', 'js');
       // Antes da primeira pintura: o layout do hero muda com movimento reduzido (global.css).
       if (matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('reduced');
+      // A abertura (Intro.astro) só passa uma vez por sessão.
+      // ?semintro pula a abertura (útil para medir e testar).
+      try { if (sessionStorage.getItem('prumo-intro') || location.search.includes('semintro')) document.documentElement.classList.add('intro-seen'); } catch (e) {}
     </script>
   </head>
   <body>
+    <a href="#conteudo" class="skip">Pular para o conteúdo</a>
     <slot />
+    <!-- Pílula do cursor com contexto (scripts/cursor.ts) e grão de filme (só desktop, global.css) -->
+    <div class="cursor" aria-hidden="true"><span class="cursor-label"></span></div>
+    <div class="grain" aria-hidden="true"></div>
     <script>import '../scripts/main.ts';</script>
   </body>
 </html>

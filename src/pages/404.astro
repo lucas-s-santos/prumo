@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import Logo from '../components/Logo.astro';
+import Bob from '../components/Bob.astro';
+// Página não encontrada: o prumo balança fora do eixo (com movimento reduzido, fica parado e inclinado).
+---
+<Base title="Página fora do prumo — PRUMO" description="Esta página não existe. Volte ao início do site da PRUMO.">
+  <main id="conteudo" class="relative grid min-h-svh place-items-center overflow-hidden bg-ink px-5 text-white">
+    <a href="/" class="absolute top-6 left-6" aria-label="PRUMO, início"><Logo /></a>
+    <div class="flex flex-col items-center text-center">
+      <div class="nf-pend flex flex-col items-center" aria-hidden="true">
+        <span class="block h-[22svh] w-px bg-paper/50"></span>
+        <Bob size={30} />
+      </div>
+      <!-- o eixo vertical de referência, que o prumo não acerta -->
+      <span class="mt-6 block h-px w-24 bg-amber/60" aria-hidden="true"></span>
+      <p class="mt-10 text-xs tracking-[0.3em] text-white/45 uppercase">Erro 404</p>
+      <h1 class="mt-4 text-[clamp(2rem,5vw,3.6rem)] leading-[1.02] font-medium tracking-[-0.03em]">
+        Esta página <span class="accent text-amber">saiu do prumo.</span>
+      </h1>
+      <p class="mt-4 max-w-[36ch] text-white/65">O endereço não existe ou mudou de lugar. A casa continua de pé lá no começo.</p>
+      <a href="/" class="mt-9 rounded-full bg-amber px-6 py-3.5 text-sm font-medium text-ink transition hover:bg-[#f0b574]">Voltar ao início</a>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .nf-pend { transform-origin: 50% 0; transform: rotate(14deg); animation: fora 3.2s ease-in-out infinite alternate; }
+  @keyframes fora { from { transform: rotate(14deg); } to { transform: rotate(6deg); } }
+</style>

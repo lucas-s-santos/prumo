@@ -8,6 +8,8 @@ const stages = STAGE_FILES.map(image).filter(Boolean) as string[];
 // Os quadros de /m já vêm recortados na faixa da fachada (scripts/frames.mjs).
 const data = JSON.stringify({ desktop, mobile: mobile.length ? mobile : desktop, stages, mobileCropped: mobile.length > 0 });
 const poster = desktop[0] ?? stages[0];
+// No celular em pé, o poster é o 1º quadro já recortado na faixa (mais leve e igual ao canvas).
+const posterM = mobile[0];
 
 const etapas = [
   { n: '01', t: 'Estudo do terreno', d: 'Topografia, sol, vento e vista. A casa começa pelo lugar.' },
@@ -20,7 +22,12 @@ const etapas = [
 <section id="obra" data-nav="A obra" class="relative bg-ink text-white" data-sequence={data}>
   <div class="seq-stage sticky top-0 h-svh overflow-hidden">
     <canvas class="seq-canvas absolute inset-0 h-full w-full" aria-hidden="true"></canvas>
-    {poster && <img src={poster} alt="" fetchpriority="high" class="seq-poster absolute inset-0 h-full w-full object-cover object-[50%_15%] transition-opacity duration-500" />}
+    {poster && (
+      <picture>
+        {posterM && <source media="(orientation: portrait) and (max-width: 768px)" srcset={posterM} />}
+        <img src={poster} alt="" fetchpriority="high" data-m={posterM ? "" : undefined} class="seq-poster absolute inset-0 h-full w-full object-cover object-[50%_15%] transition-opacity duration-500" />
+      </picture>
+    )}
     <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/0 to-ink/60"></div>
 
     <!-- Hero (primeiro estado da sequência) -->

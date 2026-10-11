@@ -11,6 +11,15 @@ export function initBlueprint(reduced: boolean) {
   if (!section || !svg || reduced) return;
 
   const q = <T extends Element = HTMLElement>(s: string) => section.querySelector<T>(s);
+
+  // A grade da prancha se desenha de cima para baixo enquanto a seção sobe na tela.
+  const grid = q('.bp-grid');
+  if (grid) {
+    const g = { v: 0 };
+    const drawGrid = () => (grid.style.clipPath = `inset(0% 0% ${(1 - g.v) * 100}% 0%)`);
+    drawGrid();
+    gsap.to(g, { v: 1, ease: 'none', onUpdate: drawGrid, scrollTrigger: { trigger: section, start: 'top 85%', end: 'top top', scrub: 0.5 } });
+  }
   const traco = q('.bp-traco'), foto = q('.bp-foto'), scan = q('.bp-scan')!, rise = q('.bp-rise')!;
   const lines = svg.querySelectorAll<SVGPathElement>('.bp-line');
   const eixos = svg.querySelectorAll('.bp-eixo');
