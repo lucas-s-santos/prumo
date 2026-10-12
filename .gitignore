@@ -19,3 +19,9 @@ assets/videos/_obra.mp4
 Thumbs.db
 desktop.ini
 *.log
+
+# Reel do Instagram e os scripts que o geram (só na máquina)
+assets/reel/
+
+# Prints e capas do portfólio (só na máquina)
+assets/portfolio/

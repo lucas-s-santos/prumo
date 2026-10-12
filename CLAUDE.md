@@ -12,7 +12,7 @@ Landing page de arquiteto, foco em visual impecável e scroll. Marca fictícia d
 - `scripts/croqui.mjs` — gera o croqui `projeto-traco` das bordas da fachada de dia (`projeto-dia`) ou, sem ela, da casa pronta; roda no fim dos dois scripts
 - `scripts/images.mjs` — `npm run imagens`: `assets/originais-flow/{servico,contato,galeria,projeto}-*` → webp em `public/imagens` e vídeos leves em `public/videos`
 - `assets/` — originais fora do deploy: `videos/obra.mp4` (fonte do hero), `originais-flow/` (fotos/vídeos gerados), `flow-entrada/` (referências para gerar), `prompts.md`. Fora do git (só na máquina, com backup no OneDrive): `originais-flow/`, `videos/*.mp4`, `referencias/` e `descartadas/` — sem eles o site roda e faz deploy, mas `npm run frames`/`imagens` não regeneram
-- Repositório: https://github.com/lucas-s-santos/prumo (público, branch `main`)
+- Repositório: https://github.com/lucas-s-santos/prumo (público, branch `main`) · no ar: https://prumo-jade.vercel.app/
 - `src/lib/assets.ts` — detecta imagens/quadros em `public/` no build
 - `src/styles/global.css` — tokens (`@theme`): ink, paper, amber, cedar, mute
 
@@ -47,4 +47,5 @@ Landing page de arquiteto, foco em visual impecável e scroll. Marca fictícia d
 - [x] Imagem OG, SEO, 404 e Lighthouse > 90 no celular
 - [x] Abertura, rodapé-final, menu em cortina/ripado, cursor, fotos ampliadas, grade do Projeto e grão
 - [x] Fachada de dia no Projeto (não repete a foto da noite)
-- [ ] Deploy na Vercel
+- [x] Reels do Instagram (`assets/reel/`, scripts em `assets/reel/fonte/` — gravar o site com `rec3.mjs`, quadro a quadro) e kit de portfólio (`assets/portfolio/`: prints desktop/celular, capas com mockup). Ambos fora do git.
+- [x] Deploy na Vercel: https://prumo-jade.vercel.app/ (canonical e og:image conferidos com o domínio real)
